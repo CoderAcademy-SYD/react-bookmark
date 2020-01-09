@@ -10,18 +10,12 @@ class BookmarksPage extends Component {
     }
 
     render() {
+        const { token } = this.props;
+
         return (
             <>
                 <h2>Create New Bookmark</h2>
-                {
-                    <BookmarksForm />
-                    //class component
-                    //renders a form
-                    //that has two controlled inputs
-                    //title & url
-                    //also watch the form submission
-                    //preventDefault when submitted
-                }
+                <BookmarksForm token={token} />
 
                 <h2>Your Bookmarks</h2>
                 <BookmarksList bookmarks={this.state.bookmarks}  />    

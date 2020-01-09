@@ -1,9 +1,11 @@
 import React, {Component} from "react";
+import axios from "axios";
 
 class BookmarksForm extends Component {
     state = {
         title: "",
-        url: ""
+        url: "",
+        errorMessage: null
     }
 
     onInputChange = (event) => {
@@ -11,26 +13,41 @@ class BookmarksForm extends Component {
         this.setState({ [name]: value });
     }
 
-    onFormSubmit = (event) => {
+    onFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(this.state);
+        const { title, url } = this.state;
+        const { token } = this.props;
+
+        try {
+            const response = await axios.post(
+                "http://localhost:3000/bookmarks", 
+                { title, url },
+                { headers: {"Authorization": `Bearer ${token}`} }
+            );
+            console.log(response);
+        } catch (error) {
+            this.setState({ errorMessage: error.message });
+        }
     }
 
     render() {
-        const { title, url } = this.state;
+        const { title, url, errorMessage } = this.state;
 
         return (
-            <form onSubmit={this.onFormSubmit} >
-                <div>
-                    <label>Title</label>
-                    <input name="title" value={title} onChange={this.onInputChange} />
-                </div>
-                <div>
-                    <label>Url</label>
-                    <input name="url" value={url} onChange={this.onInputChange} />
-                </div>
-                <input type="submit" value="Create New Bookmark" />
-            </form>
+            <>
+                {errorMessage}
+                <form onSubmit={this.onFormSubmit} >
+                    <div>
+                        <label>Title</label>
+                        <input name="title" value={title} onChange={this.onInputChange} />
+                    </div>
+                    <div>
+                        <label>Url</label>
+                        <input name="url" value={url} onChange={this.onInputChange} />
+                    </div>
+                    <input type="submit" value="Create New Bookmark" />
+                </form>
+            </>
         )
     }
 }

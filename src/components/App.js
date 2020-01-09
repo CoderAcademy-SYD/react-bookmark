@@ -15,6 +15,8 @@ class App extends Component {
     }
     
     render() {
+        const { token } = this.state;
+
         return (
             <BrowserRouter>
                 <div>
@@ -27,7 +29,9 @@ class App extends Component {
                                 return <RegisterPage {...props} onRegisterFormSubmit={this.onRegisterFormSubmit} />
                             }}  
                         />
-                        <Route exact path="/bookmarks" component={BookmarksPage} />
+                        <Route exact path="/bookmarks" render={(props) => {
+                            return <BookmarksPage {...props} token={token} />
+                        }} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>
