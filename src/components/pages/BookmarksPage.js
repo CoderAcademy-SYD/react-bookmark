@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BookmarksList from "./../BookmarksList";
-
+import BookmarksForm from "./../forms/BookmarksForm";
 class BookmarksPage extends Component {
     state = { 
         bookmarks: [
@@ -13,19 +13,18 @@ class BookmarksPage extends Component {
         return (
             <>
                 <h2>Create New Bookmark</h2>
+                {
+                    <BookmarksForm />
+                    //class component
+                    //renders a form
+                    //that has two controlled inputs
+                    //title & url
+                    //also watch the form submission
+                    //preventDefault when submitted
+                }
 
                 <h2>Your Bookmarks</h2>
-                {
-                    <BookmarksList bookmarks={this.state.bookmarks}  />
-                    //Create a new simple/functional component
-                    //called BookmarksList
-                    //This component takes a single prop named bookmarks
-                    //renders all the bookmarks to the screen as a list
-                    //example:
-                    // title - url
-                    // title - url
-                    // title - url
-                }
+                <BookmarksList bookmarks={this.state.bookmarks}  />    
             </>
         );
     }
