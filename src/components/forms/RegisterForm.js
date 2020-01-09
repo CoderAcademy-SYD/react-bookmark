@@ -1,14 +1,27 @@
 import React, {Component} from "react";
+import axios from "axios";
 
 class RegisterForm extends Component {
     state = { 
         email: "", 
-        password: "" 
+        password: "",
+        error: null
     }
 
     onFormSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
+        const { history, onRegisterFormSubmit } = this.props;
+        const { email, password } = this.state;
+
+        axios.post("http://localhost:3000/auth/register", { email, password })
+            .then(response => {
+                console.log(response);
+                onRegisterFormSubmit(response.data.token, () => history.push("/"));
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({ error });
+            });
     }
 
     onInputChange = (name, event) => {
