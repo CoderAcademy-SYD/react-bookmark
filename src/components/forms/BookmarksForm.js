@@ -8,7 +8,6 @@ class BookmarksForm extends Component {
 
     onInputChange = (event) => {
         const { name, value } = event.target;
-
         this.setState({ [name]: value });
     }
 
