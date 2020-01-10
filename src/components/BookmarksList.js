@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const BookmarksList = (props) => {
     const { bookmarks } = props;
@@ -16,4 +17,10 @@ const BookmarksList = (props) => {
     );
 }
 
-export default BookmarksList;
+const mapStateToProps = (state) => {
+    return {
+        bookmarks: state.bookmarks
+    }
+}
+
+export default connect(mapStateToProps)(BookmarksList);

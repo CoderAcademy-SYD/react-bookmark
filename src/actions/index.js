@@ -5,3 +5,10 @@ export const setAuthToken = (token) => {
         payload: token
     }
 }
+
+export const setBookmarks = (bookmarks) => {
+    return {
+        type: "SET_BOOKMARKS",
+        payload: bookmarks
+    }
+}
