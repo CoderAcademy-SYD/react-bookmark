@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+
 import axios from "axios";
 
 class RegisterForm extends Component {
@@ -6,6 +7,10 @@ class RegisterForm extends Component {
         email: "", 
         password: "",
         error: null
+    }
+
+    componentDidMount() {
+        console.log(this.props);
     }
 
     onFormSubmit = (event) => {
