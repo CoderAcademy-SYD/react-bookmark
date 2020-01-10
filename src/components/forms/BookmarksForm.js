@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import axios from "axios";
+import LocalApi from "./../../apis/local_api";
 
 class BookmarksForm extends Component {
     state = {
@@ -16,13 +16,11 @@ class BookmarksForm extends Component {
     onFormSubmit = async (event) => {
         event.preventDefault();
         const { title, url } = this.state;
-        const { token } = this.props;
 
         try {
-            const response = await axios.post(
-                "http://localhost:3000/bookmarks", 
-                { title, url },
-                { headers: {"Authorization": `Bearer ${token}`} }
+            const response = await LocalApi.post(
+                "/bookmarks", 
+                { title, url }
             );
             console.log(response);
         } catch (error) {

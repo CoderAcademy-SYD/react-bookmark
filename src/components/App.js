@@ -7,17 +7,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import BookmarksPage from "./pages/BookmarksPage";
 import PrivateRoute from "./PrivateRoute";
 
-class App extends Component {
-    state = { token: sessionStorage.getItem("token") };
-
-    onRegisterFormSubmit = (token, callback = () => {}) => {
-        sessionStorage.setItem("token", token);
-        this.setState({ token }, callback);
-    }
-    
+class App extends Component {    
     render() {
-        const { token } = this.state;
-
         return (
             <BrowserRouter>
                 <div>
@@ -30,9 +21,7 @@ class App extends Component {
                                 return <RegisterPage {...props} onRegisterFormSubmit={this.onRegisterFormSubmit} />
                             }}  
                         />
-                        <PrivateRoute exact path="/bookmarks" token={token} render={(props) => {
-                            return <BookmarksPage {...props} token={token} />
-                        }} />
+                        <PrivateRoute exact path="/bookmarks" component={BookmarksPage} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>

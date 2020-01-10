@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-
+import { connect } from "react-redux";
+import { setAuthToken } from "./../../actions";
 import axios from "axios";
 
 class RegisterForm extends Component {
@@ -15,13 +16,13 @@ class RegisterForm extends Component {
 
     onFormSubmit = (event) => {
         event.preventDefault();
-        const { history, onRegisterFormSubmit } = this.props;
+        const { history, setAuthToken } = this.props;
         const { email, password } = this.state;
 
         axios.post("http://localhost:3000/auth/register", { email, password })
             .then(response => {
-                console.log(response);
-                onRegisterFormSubmit(response.data.token, () => history.push("/"));
+                setAuthToken(response.data.token);
+                history.push("/bookmarks");
             })
             .catch(error => {
                 console.log(error);
@@ -54,4 +55,4 @@ class RegisterForm extends Component {
     }
 }
 
-export default RegisterForm;
+export default connect(null, { setAuthToken })(RegisterForm);
