@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import BookmarksPage from "./pages/BookmarksPage";
+import PrivateRoute from "./PrivateRoute";
 
 class App extends Component {
     state = { token: sessionStorage.getItem("token") };
@@ -29,7 +30,7 @@ class App extends Component {
                                 return <RegisterPage {...props} onRegisterFormSubmit={this.onRegisterFormSubmit} />
                             }}  
                         />
-                        <Route exact path="/bookmarks" render={(props) => {
+                        <PrivateRoute exact path="/bookmarks" token={token} render={(props) => {
                             return <BookmarksPage {...props} token={token} />
                         }} />
                         <Route component={NotFoundPage} />
