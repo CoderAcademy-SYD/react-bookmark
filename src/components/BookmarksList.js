@@ -1,20 +1,27 @@
-import React from "react";
+import React, {Component} from "react";
 import { connect } from "react-redux";
+import { fetchBookmarks } from "./../actions";
 
-const BookmarksList = (props) => {
-    const { bookmarks } = props;
+class BookmarksList extends Component {
+    componentDidMount() {
+        this.props.fetchBookmarks();
+    }
+    
+    render() {
+        const { bookmarks } = this.props;
 
-    return (
-        <ul>
-            {bookmarks.map((bookmark) => {
-                return (
-                    <li key={`${bookmark.title}#${bookmark.url}`}>
-                        {bookmark.title} - {bookmark.url}
-                    </li>
-                );
-            })}
-        </ul>
-    );
+        return (
+            <ul>
+                {bookmarks.map((bookmark) => {
+                    return (
+                        <li key={`${bookmark.title}#${bookmark.url}`}>
+                            {bookmark.title} - {bookmark.url}
+                        </li>
+                    );
+                })}
+            </ul>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -23,4 +30,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(BookmarksList);
+export default connect(mapStateToProps, { fetchBookmarks })(BookmarksList);
