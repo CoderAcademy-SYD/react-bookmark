@@ -1,22 +1,16 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { createBookmark } from "./../../actions";
+import { Field, reduxForm } from "redux-form";
+import Input from "./fields/Input";
 
 class BookmarksForm extends Component {
     state = {
-        title: "",
-        url: "",
         errorMessage: null
     }
 
-    onInputChange = (event) => {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-
-    onFormSubmit = async (event) => {
-        event.preventDefault();
-        const { title, url } = this.state;
+    onFormSubmit = async (formValues) => {
+        const { title, url } = formValues;
         const { createBookmark } = this.props;
 
         try {
@@ -27,19 +21,29 @@ class BookmarksForm extends Component {
     }
 
     render() {
-        const { title, url, errorMessage } = this.state;
+        const { errorMessage } = this.state;
+        const { handleSubmit, error, anyTouched } = this.props;
 
         return (
             <>
                 {errorMessage}
-                <form onSubmit={this.onFormSubmit} >
+                {anyTouched && error}
+                <form onSubmit={handleSubmit(this.onFormSubmit)} >
                     <div>
                         <label>Title</label>
-                        <input name="title" value={title} onChange={this.onInputChange} />
+                        <Field
+                            name="title"
+                            component={Input}
+                            type="text"
+                        />
                     </div>
                     <div>
                         <label>Url</label>
-                        <input name="url" value={url} onChange={this.onInputChange} />
+                        <Field
+                            name="url"
+                            component={Input}
+                            type="text"
+                        />
                     </div>
                     <input type="submit" value="Create New Bookmark" />
                 </form>
@@ -48,4 +52,20 @@ class BookmarksForm extends Component {
     }
 }
 
-export default connect(null, { createBookmark })(BookmarksForm);
+const WrappedBookmarksForm = reduxForm({
+    form: "bookmark",
+    validate: (formValues) => {
+        const errors = {};
+
+        if (!formValues.title) {
+            errors.title = "Title is required";
+            errors._error = "Tite is required";
+        }
+
+        
+
+        return errors;
+    }
+})(BookmarksForm)
+
+export default  connect(null, { createBookmark })(WrappedBookmarksForm);
