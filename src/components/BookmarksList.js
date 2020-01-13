@@ -3,12 +3,28 @@ import { connect } from "react-redux";
 import { fetchBookmarks } from "./../actions";
 
 class BookmarksList extends Component {
+    state = { loading: true };
+    
     componentDidMount() {
-        this.props.fetchBookmarks();
+        let promises = [
+            this.props.fetchBookmarks(),
+            this.props.fetchBookmarks(),
+            this.props.fetchBookmarks()
+        ]
+
+        Promise.all(promises)
+            .then(() => this.setState({ loading: false }));
     }
     
     render() {
         const { bookmarks } = this.props;
+        const { loading } = this.state;
+
+        if (loading) {
+            return(
+                <h1>Loading......</h1>
+            );
+        }
 
         return (
             <ul>

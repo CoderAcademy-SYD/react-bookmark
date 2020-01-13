@@ -15,11 +15,13 @@ export const setBookmarks = (bookmarks) => {
     }
 }
 
-export const fetchBookmarks = async () => {
-    let bookmarks = await LocalApi.get("/bookmarks");
+export const fetchBookmarks = () => {
+    return async (dispatch, getState) => {
+        let response = await LocalApi.get("/bookmarks");
 
-    return {
-        type: "SET_BOOKMARKS",
-        payload: bookmarks
+        return dispatch({
+            type: "SET_BOOKMARKS",
+            payload: response.data
+        });
     }
 }
