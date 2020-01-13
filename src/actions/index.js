@@ -25,3 +25,17 @@ export const fetchBookmarks = () => {
         });
     }
 }
+
+export const createBookmark = (bookmark) => {
+    return async (dispatch, getState) => {
+        const response = await LocalApi.post(
+            "/bookmarks", 
+            bookmark
+        );
+
+        return dispatch({
+            type: "SET_BOOKMARKS",
+            payload: response.data
+        })
+    };
+}

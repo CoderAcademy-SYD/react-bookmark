@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
 import authReducer from "./auth_reducer";
 import bookmarksReducer from "./bookmarks_reducer";
 
 export default combineReducers({
     auth: authReducer,
-    bookmarks: bookmarksReducer
+    bookmarks: bookmarksReducer,
+    form: formReducer
 });
